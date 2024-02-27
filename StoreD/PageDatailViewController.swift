@@ -1,24 +1,22 @@
-//
-//  ViewController.swift
-//  StoreD
-//
-//  Created by Andrew on 26.02.2024.
-//
-
 import UIKit
 
-class PageDatailViewController: UIViewController {
-    var index = 0
+class ViewController1: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
-        
+        view.backgroundColor = .systemRed
     }
-
 }
 
-extension PageDatailViewController {
-    func getInstance(index: Int) ->PageDatailViewController {
-        
+class ViewController2: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemGreen
+    }
+}
+
+class ViewController3: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBlue
     }
 }
