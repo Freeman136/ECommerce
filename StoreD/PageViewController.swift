@@ -1,10 +1,37 @@
 import UIKit
 
 class ViewController: UIPageViewController {
+    let mainScreenCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.itemSize = CGSize(width: 50, height: 50)
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.collectionView?.layer.cornerRadius = 25
+        let mainScreenCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
+        mainScreenCollectionView.layer.cornerRadius = 10
+        mainScreenCollectionView.layer.masksToBounds = true
+        mainScreenCollectionView.backgroundColor = UIColor.darkGray
+
+        return mainScreenCollectionView
+    }()
 
     var pages = [UIViewController]()
-    let pageControl = UIPageControl() // external - not part of underlying pages
+    let pageControl = UIPageControl()
     let initialPage = 0
+
+    override init(transitionStyle _: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey: Any]? = nil) {
+            super.init(transitionStyle: .scroll, navigationOrientation: navigationOrientation, options: options)
+            view.backgroundColor = .black
+            dataSource = self
+            delegate = self
+        }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,38 +43,25 @@ class ViewController: UIPageViewController {
 
 extension ViewController {
 
-    func setup() {
-        dataSource = self
-        delegate = self
+    private func viewController(for index: Int) -> UIViewController {
+        let viewController = UIViewController()
+        var background: UIColor = .black
 
-        pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
-        let page1 = ViewController1()
-        let page2 = ViewController2()
-        let page3 = ViewController3()
+        switch index {
+        case 0:
+            background = .red
+        case 1:
+            background = .systemIndigo
+        case 2:
+            background = .green
+        case 3:
+            background = .lightGray
+        default:
+            background = .systemGroupedBackground
+        }
 
-        pages.append(page1)
-        pages.append(page2)
-        pages.append(page3)
-
-        setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
-    }
-
-    func style() {
-        pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.currentPageIndicatorTintColor = .black
-        pageControl.pageIndicatorTintColor = .systemGray2
-        pageControl.numberOfPages = pages.count
-        pageControl.currentPage = initialPage
-    }
-
-    func layout() {
-        view.addSubview(pageControl)
-
-        NSLayoutConstraint.activate([
-            pageControl.widthAnchor.constraint(equalTo: view.widthAnchor),
-            pageControl.heightAnchor.constraint(equalToConstant: 20),
-            view.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 1),
-        ])
+        viewController.view.backgroundColor = background
+        return viewController
     }
 }
 
@@ -57,6 +71,50 @@ extension ViewController {
     @objc func pageControlTapped(_ sender: UIPageControl) {
         setViewControllers([pages[sender.currentPage]], direction: .forward, animated: true, completion: nil)
     }
+    // MARK: - setup
+    func setup() {
+        pageControl.addTarget(self, action: #selector(pageControlTapped(_:)), for: .valueChanged)
+
+        for controller in 0...3 {
+            pages.append(viewController(for: controller))
+        }
+
+        setViewControllers([pages[initialPage]], direction: .forward, animated: true, completion: nil)
+    }
+
+    func setupCollectionViewCorners() {
+
+    }
+// MARK: - style
+
+    func style() {
+        mainScreenCollectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.pageIndicatorTintColor = .systemGray2
+        pageControl.numberOfPages = pages.count
+        pageControl.currentPage = initialPage
+    }
+    // MARK: - layout NSLayoutConstraint
+
+    func layout() {
+        view.addSubview(pageControl)
+        view.addSubview(mainScreenCollectionView)
+
+        NSLayoutConstraint.activate([
+            mainScreenCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            mainScreenCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mainScreenCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainScreenCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainScreenCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+
+            pageControl.widthAnchor.constraint(equalTo: view.widthAnchor),
+            pageControl.heightAnchor.constraint(equalToConstant: 20),
+            view.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 1),
+        ])
+    }
+
 }
 
 // MARK: - DataSources
@@ -68,9 +126,9 @@ extension ViewController: UIPageViewControllerDataSource {
         guard let currentIndex = pages.firstIndex(of: viewController) else { return nil }
 
         if currentIndex == 0 {
-            return pages.last               // wrap to last
+            return pages.last
         } else {
-            return pages[currentIndex - 1]  // go previous
+            return pages[currentIndex - 1]
         }
     }
 
