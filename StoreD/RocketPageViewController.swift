@@ -1,8 +1,13 @@
 import UIKit
 
-class RocketViewController: UIPageViewController {
+class RocketPageViewController: UIPageViewController {
 
-    var pages = [UIViewController]()
+    let pages: [UIViewController] = [
+        RocketViewControllerAll.init(index: 0),
+        RocketViewControllerAll.init(index: 1),
+        RocketViewControllerAll.init(index: 2),
+        RocketViewControllerAll.init(index: 3)
+    ]
     let initialPage = 0
 
     override init(transitionStyle _: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey: Any]? = nil) {
@@ -10,49 +15,19 @@ class RocketViewController: UIPageViewController {
         view.backgroundColor = .black
         dataSource = self
         delegate = self
+        setViewControllers([pages[initialPage]], direction: .forward, animated: true)
+
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-        setupConstraints()
-    }
 }
 
-// MARK: - setup
-extension RocketViewController {
-
-    func setupMainViewImage() {
-    }
-
-    func setup() {
-        for controller in 0...3 {
-            pages.append(AllMainPagesViewController.init(index: controller))
-        }
-
-        setViewControllers([pages[initialPage]], direction: .forward, animated: true)
-    }
-// MARK: - layout NSLayoutConstraint
-
-        func setupConstraints () {
-//            view.addSubview(someView)
-//            NSLayoutConstraint.activate([
-//                someView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-//                someView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//                someView.widthAnchor.constraint(equalToConstant: 100),
-//                someView.heightAnchor.constraint(equalToConstant: 100)
-//            ])
-        }
-
-}
 
 // MARK: - DataSources
 
-extension RocketViewController: UIPageViewControllerDataSource {
+extension RocketPageViewController: UIPageViewControllerDataSource {
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
 
@@ -79,7 +54,7 @@ extension RocketViewController: UIPageViewControllerDataSource {
 
 // MARK: - Delegates
 
-extension RocketViewController: UIPageViewControllerDelegate {
+extension RocketPageViewController: UIPageViewControllerDelegate {
     func presentationCount(for pageViewController: UIPageViewController) -> Int { 4 }
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         0

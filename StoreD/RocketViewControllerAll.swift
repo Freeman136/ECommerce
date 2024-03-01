@@ -1,6 +1,6 @@
 import UIKit
 
-class AllMainPagesViewController: UIViewController {
+class RocketViewControllerAll: UIViewController {
     private let section = 2
 //    private let mainImageView: UIImageView = {
 //        let imageView = UIImageView()
@@ -20,20 +20,19 @@ class AllMainPagesViewController: UIViewController {
         mainCollectionViewScreen.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         mainCollectionViewScreen.clipsToBounds = true
         mainCollectionViewScreen.collectionViewLayout = layout
-
         mainCollectionViewScreen.register(TopUIHorizontalCell.self, forCellWithReuseIdentifier: "TopUIHorizontalCell")
-
         return mainCollectionViewScreen
     }()
 
     override func viewDidLoad() {
-        addSubViews()
+        super.viewDidLoad()
+        addSubviews()
         setupConstraints()
     }
 
     init(index: Int) {
         super.init(nibName: nil, bundle: nil)
-        
+
         switch index {
         case 0:
             view.backgroundColor = .green
@@ -47,16 +46,13 @@ class AllMainPagesViewController: UIViewController {
             break
         }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension AllMainPagesViewController {
     // MARK: - addSubViews
 
-    func addSubViews() {
+    func addSubviews() {
 //        view.addSubview(mainImageView)
         view.addSubview(mainCollectionViewScreen)
         mainCollectionViewScreen.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +76,7 @@ extension AllMainPagesViewController {
     }
 }
 
-extension AllMainPagesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension RocketViewControllerAll: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         section
