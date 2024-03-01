@@ -2,11 +2,11 @@ import UIKit
 
 class AllMainPagesViewController: UIViewController {
     private let section = 2
-    private let mainImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "falcon1")
-        return imageView
-    }()
+//    private let mainImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(named: "falcon1")
+//        return imageView
+//    }()
 
     private let mainCollectionViewScreen: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -57,10 +57,10 @@ extension AllMainPagesViewController {
     // MARK: - addSubViews
 
     func addSubViews() {
-        view.addSubview(mainImageView)
+//        view.addSubview(mainImageView)
         view.addSubview(mainCollectionViewScreen)
         mainCollectionViewScreen.translatesAutoresizingMaskIntoConstraints = false
-        mainImageView.translatesAutoresizingMaskIntoConstraints = false
+//        mainImageView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     // MARK: - setupConstraints
@@ -72,10 +72,10 @@ extension AllMainPagesViewController {
             mainCollectionViewScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             mainCollectionViewScreen.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.68),
 
-            mainImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            mainImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//            mainImageView.topAnchor.constraint(equalTo: view.topAnchor),
+//            mainImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            mainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            mainImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
