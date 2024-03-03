@@ -1,7 +1,7 @@
 import UIKit
 
 class TopUIHorizontalCell: UICollectionViewCell {
-    let textLabel: UILabel = {
+    private let textLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.black
@@ -36,5 +36,9 @@ class TopUIHorizontalCell: UICollectionViewCell {
             textLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             textLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
+    }
+
+    func configureCell(with text: String) {
+        textLabel.text = text
     }
 }

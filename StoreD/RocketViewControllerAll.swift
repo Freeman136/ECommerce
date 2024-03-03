@@ -1,12 +1,6 @@
 import UIKit
 
 class RocketViewControllerAll: UIViewController {
-    private let section = 2
-//    private let mainImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.image = UIImage(named: "falcon1")
-//        return imageView
-//    }()
 
     private let mainCollectionViewScreen: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -28,6 +22,8 @@ class RocketViewControllerAll: UIViewController {
         super.viewDidLoad()
         addSubviews()
         setupConstraints()
+        mainCollectionViewScreen.delegate = self
+        mainCollectionViewScreen.dataSource = self
     }
 
     init(index: Int) {
@@ -53,10 +49,8 @@ class RocketViewControllerAll: UIViewController {
     // MARK: - addSubViews
 
     func addSubviews() {
-//        view.addSubview(mainImageView)
         view.addSubview(mainCollectionViewScreen)
         mainCollectionViewScreen.translatesAutoresizingMaskIntoConstraints = false
-//        mainImageView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     // MARK: - setupConstraints
@@ -64,14 +58,9 @@ class RocketViewControllerAll: UIViewController {
     func setupConstraints () {
         NSLayoutConstraint.activate([
             mainCollectionViewScreen.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainCollectionViewScreen.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainCollectionViewScreen.trailiniingAnchor.constraint(equalTo: view.trailingAnchor),
             mainCollectionViewScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             mainCollectionViewScreen.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.68),
-
-//            mainImageView.topAnchor.constraint(equalTo: view.topAnchor),
-//            mainImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            mainImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            mainImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
@@ -79,17 +68,17 @@ class RocketViewControllerAll: UIViewController {
 extension RocketViewControllerAll: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        section
+        1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        13
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopUIHorizontalCell", for: indexPath) as? TopUIHorizontalCell {
-            cell.textLabel.text = "1231das lajflskj"
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopUIHorizontalCell", for: indexPath) as? TopUIHorizontalCell else {
+            return UICollectionViewCell()
         }
-        return UICollectionViewCell()
+        cell.configureCell(with: "Text for cell \(indexPath.row)")
+        return cell
     }
 }

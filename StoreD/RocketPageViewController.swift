@@ -2,20 +2,19 @@ import UIKit
 
 class RocketPageViewController: UIPageViewController {
 
-    let pages: [UIViewController] = [
+    private let pages: [UIViewController] = [
         RocketViewControllerAll.init(index: 0),
         RocketViewControllerAll.init(index: 1),
         RocketViewControllerAll.init(index: 2),
         RocketViewControllerAll.init(index: 3)
     ]
-    let initialPage = 0
 
     override init(transitionStyle _: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey: Any]? = nil) {
         super.init(transitionStyle: .scroll, navigationOrientation: navigationOrientation, options: options)
         view.backgroundColor = .black
         dataSource = self
         delegate = self
-        setViewControllers([pages[initialPage]], direction: .forward, animated: true)
+        setViewControllers([pages[0]], direction: .forward, animated: true)
 
     }
 
