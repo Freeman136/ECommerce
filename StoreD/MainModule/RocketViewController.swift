@@ -1,6 +1,12 @@
 import UIKit
 
-class RocketViewControllerAll: UIViewController {
+protocol RocketViewControllerDelegate: AnyObject {
+    func updateStruct(models: [RocketDTO])
+}
+
+class RocketViewController: UIViewController {
+
+    var presenter = RocketPresenter()
 
     private let mainCollectionViewScreen: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -18,17 +24,9 @@ class RocketViewControllerAll: UIViewController {
         return mainCollectionViewScreen
     }()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        addSubviews()
-        setupConstraints()
-        mainCollectionViewScreen.delegate = self
-        mainCollectionViewScreen.dataSource = self
-    }
 
     init(index: Int) {
         super.init(nibName: nil, bundle: nil)
-
         switch index {
         case 0:
             view.backgroundColor = .green
@@ -42,43 +40,60 @@ class RocketViewControllerAll: UIViewController {
             break
         }
     }
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addSubviews()
+        setupConstraints()
+        presenter.loadView()
+        mainCollectionViewScreen.delegate = self
+        mainCollectionViewScreen.dataSource = self
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     // MARK: - addSubViews
-
+    
     func addSubviews() {
         view.addSubview(mainCollectionViewScreen)
         mainCollectionViewScreen.translatesAutoresizingMaskIntoConstraints = false
     }
-
+    
     // MARK: - setupConstraints
-
+    
     func setupConstraints () {
         NSLayoutConstraint.activate([
             mainCollectionViewScreen.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mainCollectionViewScreen.trailiniingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainCollectionViewScreen.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             mainCollectionViewScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             mainCollectionViewScreen.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.68),
         ])
     }
 }
 
-extension RocketViewControllerAll: UICollectionViewDelegate, UICollectionViewDataSource {
-
+extension RocketViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        13
+        12
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopUIHorizontalCell", for: indexPath) as? TopUIHorizontalCell else {
             return UICollectionViewCell()
         }
         cell.configureCell(with: "Text for cell \(indexPath.row)")
         return cell
+    }
+}
+
+extension RocketViewController: RocketViewControllerDelegate {
+    
+    func updateStruct(models: [RocketDTO]) {
+        
     }
 }
