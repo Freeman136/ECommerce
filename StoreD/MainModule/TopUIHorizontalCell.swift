@@ -5,7 +5,7 @@ class TopUIHorizontalCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.black
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 8, weight: .bold)
         label.backgroundColor = UIColor.lightGray
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -16,9 +16,6 @@ class TopUIHorizontalCell: UICollectionViewCell {
         super.init(frame: frame)
         setupUI()
         setupConstraints()
-    }
-    override func layoutSubviews() {
-        super.layoutSubviews()
     }
 
     required init?(coder: NSCoder) {

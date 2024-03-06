@@ -21,7 +21,7 @@ class NetworkManager: NetworkManagerProtocol {
         let (data, response) = try await URLSession.shared.data(for: request)
         guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw NetworkManagerError.fetchDataError }
         let decodedRockets = try JSONDecoder().decode([RocketDTO].self, from: data)
-        print(decodedRockets)
+//        print(decodedRockets)
         return decodedRockets
     }
 }

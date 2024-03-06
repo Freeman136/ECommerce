@@ -20,7 +20,7 @@ class RocketPresenter {
 }
 
 extension RocketPresenter: RocketPresenterDelegate {
-    
+
     func loadView() {
         Task {
             await getRockets()
@@ -40,6 +40,4 @@ private extension RocketPresenter {
             return []
         }
     }
-    
 }
-
