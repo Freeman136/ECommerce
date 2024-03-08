@@ -20,7 +20,7 @@ class MainPageViewController: UIPageViewController {
 //        abobaPages.forEach { viewController in
 //            viewController.presenter?.updateData(model: <#RocketDTO#>)
 //        }
-    }
+    } 
 
     func createViewControllers() -> [RocketViewController] {
         var array = [RocketViewController]()

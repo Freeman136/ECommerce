@@ -38,4 +38,4 @@ class TopUIHorizontalCell: UICollectionViewCell {
     func configureCell(with text: String) {
         textLabel.text = text
     }
-}
+} 

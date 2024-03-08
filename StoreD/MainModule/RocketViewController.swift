@@ -8,7 +8,6 @@ class RocketViewController: UIViewController {
     var rocketDTOs: [RocketDTO] = []
 
     var presenter = RocketPresenter()
-
     private let mainCollectionViewScreen: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let mainCollectionViewScreen = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -36,7 +35,7 @@ class RocketViewController: UIViewController {
         default:
             break
         }
-    }
+    } 
 
     override func viewDidLoad() {
         super.viewDidLoad()

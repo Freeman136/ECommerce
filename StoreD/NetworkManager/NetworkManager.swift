@@ -9,7 +9,7 @@ import Foundation
 
 protocol NetworkManagerProtocol {
     func getRockets() async throws -> [RocketDTO]
-}
+} 
 
 class NetworkManager: NetworkManagerProtocol {
 

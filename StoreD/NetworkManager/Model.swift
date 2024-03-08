@@ -20,7 +20,7 @@ struct RocketDTO: Decodable {
         case cost = "cost_per_launch"
         case flickrImages = "flickr_images"
     }
-}
+} 
 
 struct FirstStage: Decodable {
 
