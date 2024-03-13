@@ -10,6 +10,10 @@ struct RocketDTO: Decodable {
     let flickrImages: [String]
     let stages: Int
     let company: String
+    let height: Height
+    let diameter: Height
+    let mass: Mass
+
     enum CodingKeys: String, CodingKey {
         case name
         case stages
@@ -19,8 +23,11 @@ struct RocketDTO: Decodable {
         case firstStage = "first_stage"
         case cost = "cost_per_launch"
         case flickrImages = "flickr_images"
+        case height
+        case diameter
+        case mass
     }
-} 
+}
 
 struct FirstStage: Decodable {
 
@@ -31,4 +38,14 @@ struct FirstStage: Decodable {
         case engines
         case fuelAmountTons = "fuel_amount_tons"
     }
+}
+
+struct Height: Decodable {
+    let meters: Int
+    let feet: Int
+}
+
+struct Mass: Decodable {
+    let kg: Int
+    let lb: Int
 }

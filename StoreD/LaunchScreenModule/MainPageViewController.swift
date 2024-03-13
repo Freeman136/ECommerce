@@ -2,7 +2,8 @@ import UIKit
 
 class MainPageViewController: UIPageViewController {
 
-    private lazy var abobaPages = createViewControllers()
+    private lazy var pages = createViewControllers()
+    private let networkManager = NetworkManager()
 
     override init(transitionStyle _: UIPageViewController.TransitionStyle,
                   navigationOrientation: UIPageViewController.NavigationOrientation,
@@ -11,16 +12,23 @@ class MainPageViewController: UIPageViewController {
         view.backgroundColor = .black
         dataSource = self
         delegate = self
-        setViewControllers([abobaPages[0]], direction: .forward, animated: true)
+        setViewControllers([pages[0]], direction: .forward, animated: true)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         parseAllData()
+
     }
 
     func parseAllData() {
-        // let structs = await networkManager.ParsData()
-//        abobaPages.forEach { viewController in
-//            viewController.presenter?.updateData(model: <#RocketDTO#>)
-//        }
-    } 
+        Task {
+            let array = try await  networkManager.getRockets()
+            for (index, viewController) in pages.enumerated() {
+                viewController.presenter?.updateData(model: array[index])
+            }
+        }
+}
 
     func createViewControllers() -> [RocketViewController] {
         var array = [RocketViewController]()
@@ -46,26 +54,26 @@ extension MainPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerBefore viewController: UIViewController) -> UIViewController? {
 
-        guard let currentIndex = abobaPages.firstIndex(of: (viewController as? RocketViewController)!) else {
+        guard let currentIndex = pages.firstIndex(of: (viewController as? RocketViewController)!) else {
             return UIViewController()}
 
         if currentIndex == 0 {
-            return abobaPages.last
+            return pages.last
         } else {
-            return abobaPages[currentIndex - 1]
+            return pages[currentIndex - 1]
         }
     }
 
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerAfter viewController: UIViewController) -> UIViewController? {
 
-        guard let currentIndex = abobaPages.firstIndex(of: (viewController as? RocketViewController)!) else {
+        guard let currentIndex = pages.firstIndex(of: (viewController as? RocketViewController)!) else {
             return UIViewController() }
 
-        if currentIndex < abobaPages.count - 1 {
-            return abobaPages[currentIndex + 1]  // go next
+        if currentIndex < pages.count - 1 {
+            return pages[currentIndex + 1]  // go next
         } else {
-            return abobaPages.first              // wrap to first
+            return pages.first              // wrap to first
         }
     }
 }

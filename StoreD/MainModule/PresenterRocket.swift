@@ -8,36 +8,17 @@
 import UIKit
 
 protocol RocketPresenterDelegate {
-    func loadView()
-} 
+    func updateData(model: RocketDTO)
+}
 
 class RocketPresenter {
 
-    private let networkManager = NetworkManager()
-
-    weak var view: RocketViewController?
+    weak var view: RocketViewControllerDelegate?
 
 }
 
 extension RocketPresenter: RocketPresenterDelegate {
-
-    func loadView() {
-        Task {
-            await getRockets()
-        }
-    }
-
-}
-
-// сделать модель в которую будет мапиться DTO
-private extension RocketPresenter {
-    private func getRockets() async -> [RocketDTO] {
-        do {
-            let rockets = try await networkManager.getRockets()
-            await view?.updateStruct(models: rockets)
-            return rockets
-        } catch {
-            return []
-        }
+    func updateData(model: RocketDTO) {
+        view?.updateStruct(model: model)
     }
 }
