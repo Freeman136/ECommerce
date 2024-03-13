@@ -9,7 +9,7 @@ class RocketViewController: UIViewController {
     var rockets: RocketDTO?
 
     init(index: Int) {
-        
+
         super.init(nibName: nil, bundle: nil)
         switch index {
         case 0:
@@ -38,13 +38,13 @@ class RocketViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout { sectionNumber, _ -> NSCollectionLayoutSection? in
             if sectionNumber == 0 {
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(1.0))
+                                                      heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    //            item.contentInsets.trailing = 16
-    //            item.contentInsets.bottom = 16
+                //            item.contentInsets.trailing = 16
+                //            item.contentInsets.bottom = 16
                 let groupSize = NSCollectionLayoutSize(widthDimension:
                         .fractionalWidth(0.289),
-                heightDimension: .absolute(120))
+                                                       heightDimension: .absolute(120))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
 
                 let section = NSCollectionLayoutSection(group: group)
@@ -53,16 +53,28 @@ class RocketViewController: UIViewController {
                 section.orthogonalScrollingBehavior = .continuous
 
                 return section
+            } else if sectionNumber == 1  {
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
+                let headerItem = NSCollectionLayoutItem(layoutSize: headerSize)
+                let headerGroup = NSCollectionLayoutGroup.horizontal(layoutSize: headerSize, subitems: [headerItem])
+                let headerSection = NSCollectionLayoutSection(group: headerGroup)
+
+                return headerSection
+
+
             } else {
-                let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .absolute(333), heightDimension: .absolute(120)))
-                item.contentInsets.leading = 16
-                item.contentInsets.trailing = 16
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(33)), subitems: [item])
+                let headerSize  = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
+                let headerItem = NSCollectionLayoutItem(layoutSize: headerSize)
+                let headerGroup = NSCollectionLayoutGroup.horizontal(layoutSize: headerSize, subitems:  [headerItem])
+
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60)), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
-                section.boundarySupplementaryItems = [
-                    .init(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50)), elementKind: "Falcon", alignment: .topLeading)
-                ]
-                return section
+                section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 5, bottom: 5, trailing: 5)
+                            return section
+
             }
         }
 
@@ -80,10 +92,8 @@ class RocketViewController: UIViewController {
                                               forCellWithReuseIdentifier: "TopUIHorizontalCell")
              mainCollectionViewScreen.register(MenuHorizontalCell.self,
                                                forCellWithReuseIdentifier: "MenuHorizontalCell")
-
             mainCollectionViewScreen.delegate = self
             mainCollectionViewScreen.dataSource = self
-
             return mainCollectionViewScreen
         }()
         view.addSubview(mainCollectionViewScreen)
@@ -98,15 +108,22 @@ class RocketViewController: UIViewController {
 }
 
 extension RocketViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item < 4 {
+        if indexPath.section == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopUIHorizontalCell",
                                                                 for: indexPath) as? TopUIHorizontalCell else {
                 return UICollectionViewCell()
             }
             cell.configureCell(withMainText: "Main Text", secondText: "second text")
+                return cell
+        } else if  indexPath.section == 1 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuHorizontalCell",
+                                                                for: indexPath) as? MenuHorizontalCell else {
+                return UICollectionViewCell()
+            }
+            cell.configureCell(withMainText: "Первый запуск", secondText: "7 февраля 2018")
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MenuHorizontalCell",
@@ -122,14 +139,15 @@ extension RocketViewController: UICollectionViewDelegate, UICollectionViewDataSo
 extension RocketViewController: UICollectionViewDelegateFlowLayout {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+       3
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return 4
+        } else {
+            return 3
         }
-        return 9
     }
 }
 

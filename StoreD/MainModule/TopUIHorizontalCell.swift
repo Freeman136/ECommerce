@@ -84,6 +84,7 @@ class MenuHorizontalCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.textAlignment = .right
         return label
     }()
     override init(frame: CGRect) {
@@ -91,15 +92,16 @@ class MenuHorizontalCell: UICollectionViewCell {
         setupUI()
         setupConstraints()
     }
-    
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     func configureCell(withMainText mainText: String, secondText: String) {
         mainTextLabel.text = mainText
         secondTextLabel.text = secondText
     }
+
     private func setupUI() {
         contentView.addSubview(mainTextLabel)
         contentView.addSubview(secondTextLabel)
@@ -107,14 +109,13 @@ class MenuHorizontalCell: UICollectionViewCell {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            mainTextLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            mainTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            mainTextLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             mainTextLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor),
-            secondTextLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            secondTextLabel.leadingAnchor.constraint(equalTo: mainTextLabel.trailingAnchor, constant: 10),
-            secondTextLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            secondTextLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor),
-
+            secondTextLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            secondTextLabel.leadingAnchor.constraint(equalTo: mainTextLabel.trailingAnchor, constant: 130),
+            secondTextLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            secondTextLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }
