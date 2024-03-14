@@ -119,3 +119,56 @@ class MenuHorizontalCell: UICollectionViewCell {
         ])
     }
 }
+
+class TopTextItemCell: UICollectionViewCell {
+    static let reuseIdentifier = "MenuHorizontalCell"
+    private let mainTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 26, weight: .bold)
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private let settingsIcon: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(systemName: "gearshape")
+        let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: 26)
+        image.preferredSymbolConfiguration = symbolConfiguration
+
+        return image
+    }()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+        setupConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configureCell(withMainText mainText: String) {
+        mainTextLabel.text = mainText
+    }
+
+    private func setupUI() {
+        contentView.addSubview(mainTextLabel)
+        contentView.addSubview(settingsIcon)
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            mainTextLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            mainTextLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor),
+            settingsIcon.topAnchor.constraint(equalTo: contentView.topAnchor),
+            settingsIcon.leadingAnchor.constraint(equalTo: mainTextLabel.trailingAnchor, constant: 130),
+            settingsIcon.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            settingsIcon.bottomAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
+    }
+}
